@@ -18,8 +18,8 @@ st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/Main_page.py', ic
 
 st.title('News app')
 
-api_id = 'da72a2b5-d2d7-48c7-88d5-caa934802a82'
-api_key = 'RHPuhU1DBitEluvY8alqJwDeCtEzHY7k'
-api_secret = '570tgzQKIGByka5o'
+api_id = 'xxx'
+api_key = 'xxx'
+api_secret = 'xxx'
 
 nyt = NYTAPI(api_key, parse_dates=True)
