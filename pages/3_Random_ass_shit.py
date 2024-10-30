@@ -14,8 +14,7 @@ st.page_link('/Users/mikkelpedersen/Desktop/project_vs_studio/streamlit_app/Main
 
 st.title('random ass shitt')
 
-city_list = pd.read_csv('/Users/mikkelpedersen/Desktop/project_vs_studio/wheater_api/cities_list.csv', delimiter=';')
-st.write(city_list)
+
 
 
 with st.container():
@@ -29,4 +28,5 @@ with st.container():
     url = base_url + 'appid=' + API_key + '&q=' + city
     response = requests.get(url).json()  
     
-
+    city_list = pd.read_csv('/Users/mikkelpedersen/Desktop/project_vs_studio/wheater_api/cities_list.csv', delimiter=';')
+    st.write(city_list)
