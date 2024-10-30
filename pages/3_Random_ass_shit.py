@@ -24,46 +24,67 @@ with st.container():
     url = base_url + 'appid=' + API_key + '&q=' + city
     response = requests.get(url).json()  
     
-    
     st.write('Choose your city to see the weather forecast')
     city_list = pd.read_csv('/Users/mikkelpedersen/Desktop/project_vs_studio/wheater_api/cities_list.csv', delimiter=';')
     st.dataframe(city_list, width=800, height=500)
 
-
     def kelvin_to_celcius_fahrenhit(kelvin):
-    celcius = kelvin - 273
-    fahrenheit = celcius * (9/5) + 32
-    return celcius, fahrenheit
+        celcius = kelvin - 273.15
+        fahrenheit = celcius * (9/5) + 32
+        return celcius, fahrenheit
 
+# Streamlit app title and input
+    st.title("Weather Forecast App")
+    city_name = st.text_input("Enter a city name you like:")
+
+    # Function to display the weather forecast for a specified city
     def see_forecast(city_name):
-    url_forecast = base_url + 'appid=' + API_key + '&q=' + city_name
-    wforecast = requests.get(url_forecast).json()  
-    
-    wfcity_name = wforecast['name']
-    wflat_city = wforecast['coord']['lat']
-    wflon_city = wforecast['coord']['lon']
-    wfcountry = wforecast['sys']['country']
+        if city_name:
+            # Prepare the API request URL
+            url_forecast = f"{base_url}appid={API_key}&q={city_name}"
+            try:
+                # Fetch the weather data
+                wforecast = requests.get(url_forecast).json()
+                
+                # Extract data from the JSON response
+                wfcity_name = wforecast['name']
+                wflat_city = wforecast['coord']['lat']
+                wflon_city = wforecast['coord']['lon']
+                wfcountry = wforecast['sys']['country']
 
-    wftemp_kelvin = wforecast['main']['temp']
-    wftemp_celcius, wftemp_fahrenhit = kelvin_to_celcius_fahrenhit(wftemp_kelvin)
-    wffeels_like = wforecast['main']['feels_like']
-    wffeels_like_celsius, wffeels_like_fahrenhit = kelvin_to_celcius_fahrenhit(wffeels_like)
-    wfhumidity = wforecast['main']['humidity']
-    wfwindspeed = wforecast['wind']['speed']
-    wfdescription = wforecast['weather'][0]['description']
-    wfclouds = wforecast['clouds']['all']
+                wftemp_kelvin = wforecast['main']['temp']
+                wftemp_celcius, wftemp_fahrenheit = kelvin_to_celcius_fahrenhit(wftemp_kelvin)
+                wffeels_like = wforecast['main']['feels_like']
+                wffeels_like_celsius, wffeels_like_fahrenheit = kelvin_to_celcius_fahrenhit(wffeels_like)
+                wfhumidity = wforecast['main']['humidity']
+                wfwindspeed = wforecast['wind']['speed']
+                wfdescription = wforecast['weather'][0]['description']
+                wfclouds = wforecast['clouds']['all']
 
-    wfsunrise_time = dt.datetime.utcfromtimestamp(wforecast['sys']['sunrise'] + wforecast['timezone'])
-    wfsunset_time = dt.datetime.utcfromtimestamp(wforecast['sys']['sunset'] + wforecast['timezone'])
-    
-    
-    print(f'This is the city of which you are seeing the weather forecast: {wfcity_name}')
-    print(f'This is the longtitude: {wflon_city} and latitude: {wflat_city} of the city')
-    print(f'this is the county of the city: {wfcountry}')
-    print(f'the temp is {round(wftemp_celcius,2)} in celsius, and {round(wftemp_fahrenhit, 2)} fahrenhit')
-    print(f'The tempature feels like {round(wffeels_like_celsius,2)} in celsius and {round(wffeels_like_fahrenhit,2)} in fahrenhit')
-    print(f'The humidity is: {wfhumidity}')
-    print(f'The windspeed is: {wfwindspeed}')
-    print(f'Today the weather is {wfdescription}')
-    print(f'The amount of clouds is: {wfclouds}')
-    print(f'Today the sun will rise at {wfsunrise_time} and set at {wfsunset_time}')
+                # Adjust sunrise and sunset times for local time based on timezone offset
+                timezone_offset = wforecast['timezone']
+                wfsunrise_time = dt.datetime.utcfromtimestamp(wforecast['sys']['sunrise'] + timezone_offset)
+                wfsunset_time = dt.datetime.utcfromtimestamp(wforecast['sys']['sunset'] + timezone_offset)
+                
+                # Display the extracted weather information
+                st.write(f"### City: {wfcity_name}")
+                st.write(f"**Country**: {wfcountry}")
+                st.write(f"**Coordinates**: Longitude {wflon_city}, Latitude {wflat_city}")
+                st.write(f"**Temperature**: {round(wftemp_celcius, 2)}°C / {round(wftemp_fahrenheit, 2)}°F")
+                st.write(f"**Feels Like**: {round(wffeels_like_celsius, 2)}°C / {round(wffeels_like_fahrenheit, 2)}°F")
+                st.write(f"**Humidity**: {wfhumidity}%")
+                st.write(f"**Wind Speed**: {wfwindspeed} m/s")
+                st.write(f"**Weather**: {wfdescription.capitalize()}")
+                st.write(f"**Cloud Cover**: {wfclouds}%")
+                st.write(f"**Sunrise**: {wfsunrise_time.strftime('%H:%M:%S')}")
+                st.write(f"**Sunset**: {wfsunset_time.strftime('%H:%M:%S')}")
+            
+            except KeyError:
+                st.error("City not found. Please check the city name and try again.")
+            except requests.exceptions.RequestException as e:
+                st.error(f"Error: {e}")
+
+    # Display the forecast when a city name is entered
+    if city_name:
+        see_forecast(city_name)
+
