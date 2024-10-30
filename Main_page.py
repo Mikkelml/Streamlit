@@ -17,18 +17,18 @@ with st.container():
         col1, col2, col3 = st.columns(3)
         
         with col1:
-                st.page_link('/Users/mikkelpedersen/Desktop/project_vs_studio/streamlit_app/pages/2_Watch_list.py', icon='⏰', label='Watch list')
+                st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/2_Watch_list.py', icon='⏰', label='Watch list')
         with col2:
-                st.page_link('/Users/mikkelpedersen/Desktop/project_vs_studio/streamlit_app/pages/3_Random_ass_shit.py', icon='💩', label='Random ass shit')
+                st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/3_Random_ass_shit.py', icon='💩', label='Random ass shit')
                 
         with col3:
-                st.page_link('/Users/mikkelpedersen/Desktop/project_vs_studio/streamlit_app/pages/4_Projects.py', icon='🚀', label='Projects')
+                st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/4_Projects.py', icon='🚀', label='Projects')
         st.divider()
           
           
         col11, col22, col33 = st.columns(3)      
         with col11:
-                st.page_link('/Users/mikkelpedersen/Desktop/project_vs_studio/streamlit_app/pages/5_Learnings_ToDo.py', icon='🤔', label='Things to learn')
+                st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/5_Learnings_ToDo.py', icon='🤔', label='Things to learn')
 
         with col22:
                 with st.expander("Due you dare clicking me??"):
