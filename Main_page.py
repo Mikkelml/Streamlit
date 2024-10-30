@@ -19,7 +19,7 @@ with st.container():
         with col1:
                 st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/2_Watch_list.py', icon='⏰', label='Watch list')
         with col2:
-                st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/3_Random_ass_shit.py', icon='💩', label='Random ass shit')
+                st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/3_Random_ass_shit.py', icon='🌤️', label='Weather forecast')
                 
         with col3:
                 st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/4_Projects.py', icon='🚀', label='Projects')
@@ -41,9 +41,5 @@ with st.container():
                         st.write('Click the button, or stay a moran')
         
         with col33:
-                useless_but = st.button(label='Another page')
-                if useless_but:
-                        st.write('You clicked the button you fool!!!')
-                else:
-                        pass
+                st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/news.py', icon='🚀', label='News')
                 

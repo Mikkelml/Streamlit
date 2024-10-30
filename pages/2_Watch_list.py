@@ -4,7 +4,7 @@ import numpy as np
 st.set_page_config(page_title='Watch list', page_icon='⏱️', initial_sidebar_state='collapsed')
 
 
-st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/pages/Main_page.py', icon='🏛️', label='Home')
+st.page_link('/Users/mikkelpedersen/Documents/GitHub/Streamlit/Main_page.py', icon='🏛️', label='Home')
 
 
 st.title('Watch list')
